@@ -2,42 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #fdfbf7; /* Crème très léger (Oasis) */
-  --surface: #ffffff; /* Blanc pur pour les cartes */
-  --primary: #2e3a59; /* Bleu Nuit profond (Textes & Boutons) */
-  --accent: #6c63ff; /* Violet doux pour les touches actives */
-  --text-main: #2d3250; /* Texte principal */
-  --text-muted: #8d91aa; /* Texte secondaire */
-}
-
 body {
-  background-color: var(--background);
-  color: var(--text-main);
-  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  background-color: #fdfbf7; /* Fond Crème */
+  color: #1e293b; /* Texte Gris Foncé */
 }
 
-/* --- Carte Soft Shadow (Comme sur l'image) --- */
-.soft-card {
-  background-color: var(--surface);
-  box-shadow: 0 10px 40px -10px rgba(46, 58, 89, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-/* --- Input Style "Pill" --- */
-.input-pill {
-  background-color: #f5f6fa;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
-.input-pill:focus {
-  background-color: #ffffff;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.1);
-}
-
-/* --- Scrollbar Invisible mais fonctionnelle --- */
+/* Cache la barre de défilement mais permet de scroller */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
