@@ -9,18 +9,19 @@ export default function Home() {
   const [script, setScript] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
-  // Configuration des tons avec emojis et couleurs actives
+  // Configuration des tons (Style Cyber)
   const tones = [
-    { id: "Drôle", emoji: "🤡", label: "Fun" },
-    { id: "Éducatif", emoji: "🧠", label: "Expert" },
-    { id: "Inspirant", emoji: "✨", label: "Boost" },
-    { id: "Clash", emoji: "🔥", label: "Clash" },
+    { id: "Drôle", emoji: "🤪", label: "FUN" },
+    { id: "Éducatif", emoji: "🧠", label: "PRO" },
+    { id: "Inspirant", emoji: "✨", label: "VIBE" },
+    { id: "Clash", emoji: "🤬", label: "RANT" },
+    { id: "Story", emoji: "🍿", label: "STORY" },
   ];
 
   const handleSubmit = async () => {
     if (!topic) return;
     setIsLoading(true);
-    setScript(""); // Reset script
+    setScript("");
 
     try {
       const response = await fetch("/api/generate", {
@@ -32,7 +33,7 @@ export default function Home() {
       if (data.script) setScript(data.script);
     } catch (error) {
       console.error(error);
-      alert("Erreur de connexion");
+      alert("Erreur réseau");
     } finally {
       setIsLoading(false);
     }
@@ -45,132 +46,132 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pb-32 pt-10 px-6 max-w-md mx-auto relative">
-      {/* --- HEADER: SALUTATION --- */}
-      <header className="flex justify-between items-start mb-8 animate-slide-up">
+    <div className="min-h-screen pb-32 pt-6 px-4 max-w-md mx-auto relative overflow-hidden">
+      {/* Décoration d'arrière-plan (Glow) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-[#FF0050] opacity-[0.08] blur-[100px] pointer-events-none"></div>
+
+      {/* --- HEADER: BRANDING --- */}
+      <header className="flex justify-between items-center mb-8 relative z-10">
         <div>
-          <h1 className="text-4xl font-bold text-[#2D3250] leading-tight">
-            Bonjour,
-            <br />
-            Creator 👋
+          <h1 className="text-2xl font-extrabold tracking-tight italic">
+            VIRAL<span className="text-[#00F2EA]">SCRIPT</span>
+            <span className="text-[#FF0050] text-xs align-top ml-1">BETA</span>
           </h1>
         </div>
-        <button className="p-3 bg-white rounded-full shadow-sm border border-[#F0EAE0] text-xl">🛎️</button>
+        <div className="flex items-center gap-2 bg-[#1E1E24] px-3 py-1.5 rounded-full border border-[#2D2D39]">
+          <span className="text-xs font-bold text-[#FF0050]">🔥 12</span>
+          <span className="text-[10px] text-[#A0A0B0] uppercase font-bold">Streak</span>
+        </div>
       </header>
 
-      {/* --- CARTE PRINCIPALE (HERO) --- */}
-      <div
-        className="bg-[#2D3250] rounded-[32px] p-8 text-white shadow-xl shadow-[#2D3250]/20 mb-10 relative overflow-hidden animate-slide-up"
-        style={{ animationDelay: "0.1s" }}
-      >
-        {/* Formes abstraites en fond */}
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-5 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#6C63FF] opacity-20 rounded-full blur-3xl"></div>
-
-        <div className="relative z-10">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="text-xl font-semibold">Objectif du jour</h2>
-              <p className="text-[#8D91AA] text-sm">Un script viral en 1 clic.</p>
-            </div>
-            <div className="w-12 h-12 rounded-full border-4 border-[#6C63FF]/30 flex items-center justify-center font-bold text-sm">GO</div>
-          </div>
-
-          {/* Champ de Saisie Intégré */}
-          <div className="bg-[#3D4366] rounded-2xl p-1 flex items-center border border-white/10 focus-within:border-[#6C63FF] focus-within:bg-[#3D4366] transition-all">
-            <span className="pl-4 text-xl">💡</span>
-            <input
-              type="text"
+      {/* --- ZONE DE CRÉATION (Main) --- */}
+      <main className="space-y-6 relative z-10">
+        {/* 1. Input Sujet */}
+        <div className="space-y-2">
+          <label className="text-xs font-bold text-[#A0A0B0] uppercase tracking-wider ml-1">Sujet du Banger</label>
+          <div className="glass-card rounded-2xl p-4 input-focus-effect transition-all">
+            <textarea
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              placeholder="Sujet (ex: Pizza Maison)"
-              className="w-full bg-transparent border-none text-white placeholder-[#8D91AA] px-4 py-4 outline-none font-medium"
+              placeholder="Ex: Pourquoi personne n'achète tes produits..."
+              className="w-full bg-transparent border-none text-white placeholder-[#505060] text-lg font-medium focus:ring-0 resize-none h-20 leading-relaxed"
             />
           </div>
         </div>
-      </div>
 
-      {/* --- SÉLECTEUR DE TON (Habitudes) --- */}
-      <div className="mb-10 animate-slide-up" style={{ animationDelay: "0.2s" }}>
-        <h3 className="text-[#2D3250] font-bold text-lg mb-5">L'ambiance</h3>
-        <div className="flex justify-between gap-2 overflow-x-auto no-scrollbar">
-          {tones.map((t) => {
-            const isActive = tone === t.id;
-            return (
-              <button
-                key={t.id}
-                onClick={() => setTone(t.id)}
-                className={`flex flex-col items-center gap-3 min-w-[70px] transition-all duration-300 ${
-                  isActive ? "transform -translate-y-1" : "opacity-60"
-                }`}
-              >
-                <div
-                  className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl border-2 transition-all shadow-sm ${
-                    isActive ? "bg-[#6C63FF] border-[#6C63FF] text-white shadow-[#6C63FF]/40" : "bg-white border-transparent text-gray-400"
+        {/* 2. Sélecteur de Ton (Cyber Pills) */}
+        <div className="space-y-2">
+          <label className="text-xs font-bold text-[#A0A0B0] uppercase tracking-wider ml-1">La Vibe</label>
+          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+            {tones.map((t) => {
+              const isActive = tone === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setTone(t.id)}
+                  className={`flex items-center gap-2 px-4 py-3 rounded-full border transition-all whitespace-nowrap ${
+                    isActive
+                      ? "bg-[#1E1E24] border-[#00F2EA] text-[#00F2EA] shadow-[0_0_15px_rgba(0,242,234,0.3)]"
+                      : "bg-[#0F0F12] border-[#2D2D39] text-[#A0A0B0] hover:border-[#505060]"
                   }`}
                 >
-                  {t.emoji}
-                </div>
-                <span className={`text-xs font-bold ${isActive ? "text-[#6C63FF]" : "text-[#8D91AA]"}`}>{t.label}</span>
-              </button>
-            );
-          })}
+                  <span className="text-lg">{t.emoji}</span>
+                  <span className="text-xs font-bold tracking-wide">{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      {/* --- BOUTON GÉNÉRER --- */}
-      <div className="animate-slide-up" style={{ animationDelay: "0.3s" }}>
+        {/* 3. Bouton CTA (Electric Pink) */}
         <button
           onClick={handleSubmit}
           disabled={isLoading || !topic}
-          className={`w-full py-5 rounded-[24px] font-bold text-lg shadow-lg transition-all flex items-center justify-center gap-3
-            ${
-              isLoading || !topic
-                ? "bg-[#E0D8CC] text-[#A0988C] cursor-not-allowed shadow-none"
-                : "bg-[#2D3250] text-white shadow-[#2D3250]/30 hover:scale-[1.02] active:scale-95"
-            }`}
+          className={`w-full py-4 rounded-full font-extrabold text-white text-lg uppercase tracking-widest flex items-center justify-center gap-3
+            ${isLoading || !topic ? "bg-[#1E1E24] text-[#505060] cursor-not-allowed" : "btn-primary"}`}
         >
           {isLoading ? (
             <>
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              <span>Magie en cours...</span>
+              <span>Cooking...</span>
             </>
           ) : (
-            "✨ Générer le Script"
+            <>
+              <span>GÉNÉRER</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </>
           )}
         </button>
-      </div>
+      </main>
 
-      {/* --- RÉSULTAT --- */}
+      {/* --- RÉSULTAT (Code Editor Style) --- */}
       {script && (
-        <div className="mt-10 animate-slide-up pb-6">
-          <div className="flex justify-between items-end mb-4 px-1">
-            <h3 className="text-[#2D3250] font-bold text-xl">Résultat</h3>
+        <div className="mt-8 animate-[slideUp_0.5s_ease-out]">
+          <div className="flex justify-between items-end mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-[#00F2EA] rounded-full animate-pulse shadow-[0_0_8px_#00F2EA]"></div>
+              <h3 className="text-sm font-bold text-white uppercase tracking-widest">Script Généré</h3>
+            </div>
             <button
               onClick={copyToClipboard}
-              className={`px-4 py-2 rounded-full text-xs font-bold transition-colors ${
-                isCopied ? "bg-green-100 text-green-700" : "bg-white text-[#6C63FF]"
+              className={`text-xs font-bold px-3 py-1 rounded border transition-all ${
+                isCopied ? "bg-[#00F2EA]/10 border-[#00F2EA] text-[#00F2EA]" : "border-[#2D2D39] text-[#A0A0B0] hover:text-white hover:border-white"
               }`}
             >
-              {isCopied ? "Copié !" : "Copier"}
+              {isCopied ? "COPIED!" : "COPY"}
             </button>
           </div>
-          <div className="bg-white p-6 rounded-[24px] shadow-sm border border-[#F0EAE0] leading-relaxed text-[#4A4F6B] whitespace-pre-wrap">
-            {script}
+
+          {/* Container Éditeur */}
+          <div className="bg-[#151519] border border-[#2D2D39] rounded-2xl overflow-hidden relative">
+            {/* Header Éditeur (Faux onglets) */}
+            <div className="bg-[#1E1E24] px-4 py-2 flex items-center gap-2 border-b border-[#2D2D39]">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+              </div>
+              <span className="ml-4 text-[10px] font-mono text-[#505060]">script.txt — {script.length} chars</span>
+            </div>
+
+            {/* Zone de Texte Monospace */}
+            <div className="p-5 max-h-[400px] overflow-y-auto custom-scrollbar">
+              <div className="font-editor text-sm leading-loose text-[#E0E0E0] whitespace-pre-wrap">{script}</div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* --- NAVIGATION BAS (Fixe & Propre) --- */}
-      <nav className="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-lg border-t border-white/20 px-8 pb-8 pt-4 flex justify-between items-end z-50 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.05)]">
-        <button className="flex flex-col items-center gap-1 text-[#6C63FF]">
+      {/* --- BOTTOM NAVIGATION (Glassmorphism) --- */}
+      <nav className="fixed bottom-6 left-6 right-6 bg-[#1E1E24]/90 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-4 flex justify-between items-center z-50 shadow-2xl">
+        <button className="text-[#00F2EA] flex flex-col items-center gap-1">
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
           </svg>
-          <span className="text-[10px] font-bold">Home</span>
         </button>
-
-        <button className="flex flex-col items-center gap-1 text-[#8D91AA] hover:text-[#2D3250]">
+        <button className="text-[#505060] hover:text-white transition-colors">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
@@ -178,32 +179,17 @@ export default function Home() {
               d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
             />
           </svg>
-          <span className="text-[10px] font-medium">Historique</span>
         </button>
-
-        {/* Le bouton central flottant (décoratif ici car l'action est plus haut) */}
-        <div className="relative -top-5">
-          <div className="w-14 h-14 bg-[#2D3250] rounded-full flex items-center justify-center text-white shadow-lg shadow-[#2D3250]/40 border-[6px] border-[#FFF9F0]">
-            <span className="text-2xl pb-1">+</span>
-          </div>
-        </div>
-
-        <button className="flex flex-col items-center gap-1 text-[#8D91AA] hover:text-[#2D3250]">
+        <div className="w-[1px] h-6 bg-[#2D2D39]"></div>
+        <button className="text-[#505060] hover:text-white transition-colors">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          <span className="text-[10px] font-medium">Stats</span>
         </button>
-
-        <button className="flex flex-col items-center gap-1 text-[#8D91AA] hover:text-[#2D3250]">
+        <button className="text-[#505060] hover:text-white transition-colors">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
-          <span className="text-[10px] font-medium">Profil</span>
         </button>
       </nav>
     </div>

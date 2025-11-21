@@ -1,17 +1,64 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* --- PALETTE VIRALSCRIPT --- */
+  --primary: #ff0050; /* Electric Pink */
+  --secondary: #00f2ea; /* Cyber Cyan */
+  --bg-main: #0f0f12; /* Deep Void */
+  --bg-card: #1e1e24; /* Surface Grey */
+  --border: #2d2d39; /* Border Line */
+  --text-main: #ffffff; /* Pure White */
+  --text-muted: #a0a0b0; /* Muted Grey */
+}
+
 body {
-  background-color: #fff9f0; /* Fond Crème Oasis */
-  color: #2d3250; /* Texte Bleu Nuit */
-  font-family: "Outfit", sans-serif; /* Police Moderne */
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Masquer la scrollbar tout en gardant le scroll */
+/* --- UTILS --- */
+
+/* Titres Impactants */
+h1,
+h2,
+h3 {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Éditeur de Script (Monospace) */
+.font-editor {
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Bouton Pill Shape avec Glow */
+.btn-primary {
+  background: linear-gradient(90deg, #ff0050 0%, #ff3070 100%);
+  box-shadow: 0 4px 20px rgba(255, 0, 80, 0.4);
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 0, 80, 0.6);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Carte Glassmorphism Subtil */
+.glass-card {
+  background: rgba(30, 30, 36, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Scrollbar cachée */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -20,18 +67,22 @@ body {
   scrollbar-width: none;
 }
 
-/* Animation douce pour l'apparition */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Input Focus Effect */
+.input-focus-effect:focus-within {
+  border-color: var(--secondary);
+  box-shadow: 0 0 15px rgba(0, 242, 234, 0.2);
 }
 
-.animate-slide-up {
-  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
