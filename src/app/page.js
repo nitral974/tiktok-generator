@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 export default function Home() {
+  // --- États (Logique inchangée, Design changé) ---
   const [topic, setTopic] = useState("");
   const [tone, setTone] = useState("Drôle");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +25,7 @@ export default function Home() {
       if (data.script) setScript(data.script);
     } catch (error) {
       console.error(error);
-      alert("Erreur lors de la génération");
+      alert("Une erreur est survenue.");
     } finally {
       setIsLoading(false);
     }
@@ -37,101 +38,168 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 font-sans selection:bg-[#ff0050] selection:text-white">
-      {/* Décoration d'arrière-plan subtile (Néons TikTok) */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00f2ea] via-white to-[#ff0050] opacity-80 shadow-[0_0_20px_rgba(0,242,234,0.5)]"></div>
+    <div className="min-h-screen bg-grid-white flex flex-col items-center p-4 sm:p-8 selection:bg-purple-500/30">
+      {/* Effet de spot lumineux en haut */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <div className="w-full max-w-lg space-y-8 z-10">
-        {/* --- HEADER --- */}
-        <div className="text-center space-y-2">
-          <div className="inline-block relative">
-            <h1 className="text-5xl font-black tracking-tighter text-white mb-1 drop-shadow-[2px_2px_0px_rgba(255,0,80,0.8)]">
-              TikTok<span className="text-[#00f2ea] drop-shadow-[-2px_-2px_0px_rgba(0,0,0,1)]">Genius</span>
-            </h1>
+      {/* --- CONTAINER PRINCIPAL --- */}
+      <main className="w-full max-w-2xl z-10 space-y-8 mt-8 sm:mt-12">
+        {/* 1. En-tête Identité */}
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-4">
+            <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span className="text-[10px] font-medium uppercase tracking-widest text-gray-400">AI Studio v1.0</span>
           </div>
-          <p className="text-gray-400 text-sm font-medium tracking-wide uppercase">Générateur de scripts viraux</p>
+
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
+            TikTok <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Genius</span>
+          </h1>
+          <p className="text-gray-400 text-lg font-light max-w-md mx-auto">
+            Transforme tes idées en scripts viraux. <br className="hidden sm:block" />
+            <span className="text-gray-500">Architecture par Gemini Pro.</span>
+          </p>
         </div>
 
-        {/* --- CARD PRINCIPALE --- */}
-        <div className="bg-[#121212] border border-[#333] p-6 rounded-2xl shadow-2xl relative overflow-hidden">
-          {/* Formulaire */}
-          <div className="space-y-6 relative z-10">
-            {/* Input Sujet */}
-            <div>
-              <label className="text-[#00f2ea] text-xs font-bold uppercase tracking-wider mb-2 block">Sujet de la vidéo</label>
-              <input
-                type="text"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                placeholder="Ex: Comment devenir riche..."
-                className="w-full bg-[#1E1E1E] text-white border-b-2 border-[#333] focus:border-[#ff0050] placeholder-gray-600 text-lg py-3 px-2 focus:outline-none transition-colors"
-              />
-            </div>
-
-            {/* Select Ton */}
-            <div>
-              <label className="text-[#ff0050] text-xs font-bold uppercase tracking-wider mb-2 block">Ton & Ambiance</label>
-              <div className="relative">
-                <select
-                  value={tone}
-                  onChange={(e) => setTone(e.target.value)}
-                  className="w-full bg-[#1E1E1E] text-white border-b-2 border-[#333] focus:border-[#00f2ea] text-lg py-3 px-2 pr-10 focus:outline-none appearance-none cursor-pointer"
-                >
-                  <option value="Drôle">🤡 Drôle & Fun</option>
-                  <option value="Éducatif">📚 Éducatif & Sérieux</option>
-                  <option value="Inspirant">✨ Inspirant & Storytelling</option>
-                  <option value="Clash">🔥 Polémique & Cash</option>
-                </select>
-                <div className="absolute right-2 top-4 pointer-events-none text-gray-500">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M6 9l6 6 6-6" />
+        {/* 2. La "Control Room" (Formulaire) */}
+        <div className="glass-panel rounded-2xl p-1">
+          <div className="bg-[#09090b]/80 rounded-xl p-6 sm:p-8 space-y-6">
+            {/* Groupe Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 ml-1">Sujet de la vidéo</label>
+              <div className="relative group">
+                <input
+                  type="text"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  placeholder="Ex: 5 astuces pour mieux dormir..."
+                  className="w-full bg-[#18181b] text-white border border-[#27272a] rounded-lg py-4 px-4 pl-11 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all placeholder:text-gray-600"
+                />
+                {/* Icône Search */}
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-purple-400 transition-colors">
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
               </div>
             </div>
 
-            {/* Bouton Générer */}
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading || !topic}
-              className={`w-full py-4 px-6 rounded-xl font-bold text-lg uppercase tracking-wider transition-all duration-200 transform active:scale-95
-                ${
-                  isLoading || !topic
-                    ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-                    : "bg-white text-black hover:bg-[#00f2ea] hover:shadow-[0_0_20px_rgba(0,242,234,0.6)]"
-                }`}
-            >
-              {isLoading ? "Création en cours..." : "Générer le Script ⚡️"}
-            </button>
+            {/* Groupe Select & Bouton (Grid sur Desktop, Stack sur Mobile) */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* Select */}
+              <div className="sm:col-span-1 space-y-2">
+                <label className="text-sm font-medium text-gray-300 ml-1">Ton</label>
+                <div className="relative">
+                  <select
+                    value={tone}
+                    onChange={(e) => setTone(e.target.value)}
+                    className="w-full bg-[#18181b] text-white border border-[#27272a] rounded-lg py-4 px-4 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="Drôle">🤡 Fun</option>
+                    <option value="Éducatif">🧠 Expert</option>
+                    <option value="Inspirant">✨ Motiv</option>
+                    <option value="Clash">🔥 Clash</option>
+                  </select>
+                  {/* Chevron */}
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bouton Action */}
+              <div className="sm:col-span-2 flex items-end">
+                <button
+                  onClick={handleSubmit}
+                  disabled={isLoading || !topic}
+                  className={`w-full h-[58px] rounded-lg font-semibold text-white shadow-lg transition-all duration-200 flex items-center justify-center gap-2
+                    ${
+                      isLoading || !topic
+                        ? "bg-[#27272a] text-gray-500 cursor-not-allowed border border-transparent"
+                        : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 border border-white/10 hover:shadow-purple-500/20 active:scale-[0.98]"
+                    }`}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      <span>Analyse en cours...</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      <span>Générer le Script</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* --- RESULTAT --- */}
+        {/* 3. Résultat (Apparaît avec animation) */}
         {script && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex justify-between items-end mb-3 px-2">
-              <span className="text-xs font-bold text-gray-500 uppercase">Résultat</span>
-              <button
-                onClick={copyToClipboard}
-                className={`text-xs px-3 py-1 rounded border transition-all ${
-                  isCopied ? "bg-green-500 border-green-500 text-black" : "border-gray-700 text-gray-400 hover:text-white hover:border-white"
-                }`}
-              >
-                {isCopied ? "Copié !" : "Copier le texte"}
+          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+            {/* Barre d'outils du document */}
+            <div className="flex items-center justify-between mb-3 px-1">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Résultat IA</span>
+              </div>
+
+              <button onClick={copyToClipboard} className="group flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-white/5 transition-colors">
+                <span className={`text-xs font-medium transition-colors ${isCopied ? "text-green-400" : "text-gray-400 group-hover:text-white"}`}>
+                  {isCopied ? "Copié dans le presse-papier" : "Copier le texte"}
+                </span>
+                {isCopied ? (
+                  <svg width="14" height="14" className="text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg
+                    width="14"
+                    height="14"
+                    className="text-gray-500 group-hover:text-white transition-colors"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
+                  </svg>
+                )}
               </button>
             </div>
 
-            {/* Zone de texte style "Terminal" ou "Notes" */}
-            <div className="bg-[#121212] border-l-4 border-[#00f2ea] p-6 rounded-r-xl shadow-lg">
-              <div className="prose prose-invert max-w-none whitespace-pre-wrap text-gray-300 font-light leading-relaxed custom-scrollbar max-h-[60vh] overflow-y-auto">
-                {script}
+            {/* Le Document "Papier" */}
+            <div className="glass-panel rounded-xl overflow-hidden">
+              <div className="bg-[#121212]/90 p-6 sm:p-8">
+                <div className="prose prose-invert max-w-none">
+                  <div className="whitespace-pre-wrap font-mono text-sm sm:text-base text-gray-300 leading-relaxed custom-scrollbar max-h-[60vh] overflow-y-auto">
+                    {script}
+                  </div>
+                </div>
+              </div>
+              {/* Footer du document */}
+              <div className="bg-white/5 border-t border-white/5 px-6 py-2 flex justify-between items-center">
+                <span className="text-[10px] text-gray-600 font-mono">MODEL: GEMINI-PRO</span>
+                <span className="text-[10px] text-gray-600 font-mono">TOKENS: {script.length}</span>
               </div>
             </div>
-
-            <p className="text-center text-[#333] text-[10px] mt-4 uppercase tracking-widest">Powered by Gemini AI</p>
           </div>
         )}
-      </div>
+      </main>
+
+      {/* Footer Global */}
+      <footer className="mt-auto py-6 text-center text-gray-600 text-xs">
+        <p>&copy; 2025 TikTok Genius. Designed for Creators.</p>
+      </footer>
     </div>
   );
 }

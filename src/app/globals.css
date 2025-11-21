@@ -2,43 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-/* --- Fond noir profond par défaut (Style TikTok) --- */
-body {
-  background-color: #000000;
-  color: #ffffff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+:root {
+  --background: #09090b; /* Zinc 950 */
+  --surface: #18181b;    /* Zinc 900 */
+  --border: #27272a;     /* Zinc 800 */
+  --primary: #8b5cf6;    /* Violet 500 */
+  --primary-glow: rgba(139, 92, 246, 0.5);
 }
 
-/* --- Personnalisation de la barre de défilement (Scrollbar) --- */
-/* Pour Chrome, Safari et Opera */
+body {
+  background-color: var(--background);
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Pattern de fond "Grid" Pro --- */
+.bg-grid-white {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* --- Effet Glassmorphism Premium --- */
+.glass-panel {
+  background: rgba(24, 24, 27, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Typographie Gradient --- */
+.text-gradient {
+  background: linear-gradient(to right, #fff, #a1a1aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Scrollbar customisée discrète --- */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
-
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #121212; /* Fond de la barre sombre */
+  background: transparent;
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #333; /* Couleur de la poignée */
-  border-radius: 10px; /* Arrondi */
+  background-color: #3f3f46;
+  border-radius: 20px;
 }
-
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #00f2ea; /* Devient Cyan TikTok au survol */
+  background-color: #52525b;
 }
 
-/* --- Animations Globales --- */
-@keyframes pulse-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 15px rgba(0, 242, 234, 0.1);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(255, 0, 80, 0.3);
-  }
+/* --- Animations --- */
+@keyframes shine {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
 
-.glow-effect {
-  animation: pulse-glow 3s infinite;
+.animate-shine {
+  background: linear-gradient(
+    to right, 
+    #8b5cf6 20%, 
+    #d946ef 40%, 
+    #d946ef 60%, 
+    #8b5cf6 80%
+  );
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
 }
