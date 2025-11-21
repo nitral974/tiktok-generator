@@ -33,175 +33,105 @@ export default function Home() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(script);
     setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000); // Reset après 2 sec
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-slate-900 flex flex-col items-center justify-center p-4 sm:p-6 font-sans text-slate-100">
-      {/* --- ARRIÈRE-PLAN ANIMÉ --- */}
-      <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-      <div className="absolute top-0 -right-4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 font-sans selection:bg-[#ff0050] selection:text-white">
+      {/* Décoration d'arrière-plan subtile (Néons TikTok) */}
+      <div className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00f2ea] via-white to-[#ff0050] opacity-80 shadow-[0_0_20px_rgba(0,242,234,0.5)]"></div>
 
-      {/* --- CONTENEUR PRINCIPAL (Effet Glassmorphism) --- */}
-      <div className="relative w-full max-w-md bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl overflow-hidden z-10">
-        {/* En-tête */}
-        <div className="p-8 pb-6 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 shadow-lg mb-4">
-            {/* Icône Play */}
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-white">
-              <path
-                fillRule="evenodd"
-                d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                clipRule="evenodd"
-              />
-            </svg>
+      <div className="w-full max-w-lg space-y-8 z-10">
+        {/* --- HEADER --- */}
+        <div className="text-center space-y-2">
+          <div className="inline-block relative">
+            <h1 className="text-5xl font-black tracking-tighter text-white mb-1 drop-shadow-[2px_2px_0px_rgba(255,0,80,0.8)]">
+              TikTok<span className="text-[#00f2ea] drop-shadow-[-2px_-2px_0px_rgba(0,0,0,1)]">Genius</span>
+            </h1>
           </div>
-          <h1 className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-purple-200">
-            TikTok Genius
-          </h1>
-          <p className="text-slate-400 text-sm mt-2">Ton assistant IA pour percer 🚀</p>
+          <p className="text-gray-400 text-sm font-medium tracking-wide uppercase">Générateur de scripts viraux</p>
         </div>
 
-        {/* Formulaire */}
-        <div className="px-8 pb-8 space-y-5">
-          {/* Input Sujet */}
-          <div className="group">
-            <label className="block text-xs font-medium text-purple-300 uppercase tracking-wider mb-2 ml-1">De quoi on parle ?</label>
-            <div className="relative">
+        {/* --- CARD PRINCIPALE --- */}
+        <div className="bg-[#121212] border border-[#333] p-6 rounded-2xl shadow-2xl relative overflow-hidden">
+          {/* Formulaire */}
+          <div className="space-y-6 relative z-10">
+            {/* Input Sujet */}
+            <div>
+              <label className="text-[#00f2ea] text-xs font-bold uppercase tracking-wider mb-2 block">Sujet de la vidéo</label>
               <input
                 type="text"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Ex: Les meilleures astuces pour..."
-                className="w-full bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 text-sm rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent block w-full p-4 pl-12 transition-all shadow-inner"
+                placeholder="Ex: Comment devenir riche..."
+                className="w-full bg-[#1E1E1E] text-white border-b-2 border-[#333] focus:border-[#ff0050] placeholder-gray-600 text-lg py-3 px-2 focus:outline-none transition-colors"
               />
-              {/* Icône Recherche */}
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
+            </div>
+
+            {/* Select Ton */}
+            <div>
+              <label className="text-[#ff0050] text-xs font-bold uppercase tracking-wider mb-2 block">Ton & Ambiance</label>
+              <div className="relative">
+                <select
+                  value={tone}
+                  onChange={(e) => setTone(e.target.value)}
+                  className="w-full bg-[#1E1E1E] text-white border-b-2 border-[#333] focus:border-[#00f2ea] text-lg py-3 px-2 pr-10 focus:outline-none appearance-none cursor-pointer"
+                >
+                  <option value="Drôle">🤡 Drôle & Fun</option>
+                  <option value="Éducatif">📚 Éducatif & Sérieux</option>
+                  <option value="Inspirant">✨ Inspirant & Storytelling</option>
+                  <option value="Clash">🔥 Polémique & Cash</option>
+                </select>
+                <div className="absolute right-2 top-4 pointer-events-none text-gray-500">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Select Ton */}
-          <div>
-            <label className="block text-xs font-medium text-purple-300 uppercase tracking-wider mb-2 ml-1">Quelle ambiance ?</label>
-            <div className="relative">
-              <select
-                value={tone}
-                onChange={(e) => setTone(e.target.value)}
-                className="w-full bg-slate-800/50 border border-slate-700 text-white text-sm rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent block w-full p-4 pl-12 appearance-none cursor-pointer shadow-inner hover:bg-slate-800/80 transition-colors"
-              >
-                <option value="Drôle">🤡 Drôle & Fun</option>
-                <option value="Éducatif">🧠 Éducatif & Clair</option>
-                <option value="Inspirant">✨ Inspirant & Motivant</option>
-                <option value="Polémique">🔥 Polémique & Cash</option>
-                <option value="Mystérieux">🕵️‍♂️ Mystérieux & Teasing</option>
-              </select>
-              {/* Icône Humeur */}
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-              </div>
-              {/* Flèche custom */}
-              <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </div>
-            </div>
+            {/* Bouton Générer */}
+            <button
+              onClick={handleSubmit}
+              disabled={isLoading || !topic}
+              className={`w-full py-4 px-6 rounded-xl font-bold text-lg uppercase tracking-wider transition-all duration-200 transform active:scale-95
+                ${
+                  isLoading || !topic
+                    ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                    : "bg-white text-black hover:bg-[#00f2ea] hover:shadow-[0_0_20px_rgba(0,242,234,0.6)]"
+                }`}
+            >
+              {isLoading ? "Création en cours..." : "Générer le Script ⚡️"}
+            </button>
           </div>
-
-          {/* Bouton Action Principal */}
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading || !topic}
-            className={`w-full relative p-4 rounded-xl font-bold text-white shadow-lg transform transition-all duration-200 active:scale-95 flex items-center justify-center gap-2
-              ${
-                isLoading || !topic
-                  ? "bg-slate-700 cursor-not-allowed text-slate-400"
-                  : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 hover:shadow-purple-500/25 border border-white/10"
-              }`}
-          >
-            {isLoading ? (
-              <>
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                </svg>
-                Rédaction en cours...
-              </>
-            ) : (
-              <>
-                <span>Générer le Script</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-              </>
-            )}
-          </button>
         </div>
-      </div>
 
-      {/* --- RESULTAT (Carte qui apparaît en dessous) --- */}
-      {script && (
-        <div className="w-full max-w-md mt-6 relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <div className="bg-slate-800/90 backdrop-blur-md border border-slate-700 rounded-3xl overflow-hidden shadow-2xl">
-            {/* Barre d'outils du résultat */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700/50 bg-slate-900/50">
-              <h3 className="font-bold text-purple-400 flex items-center gap-2">
-                <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                Script Généré
-              </h3>
+        {/* --- RESULTAT --- */}
+        {script && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex justify-between items-end mb-3 px-2">
+              <span className="text-xs font-bold text-gray-500 uppercase">Résultat</span>
               <button
                 onClick={copyToClipboard}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all
-                  ${
-                    isCopied
-                      ? "bg-green-500/20 text-green-400 border border-green-500/50"
-                      : "bg-slate-700 hover:bg-slate-600 text-white border border-slate-600"
-                  }`}
+                className={`text-xs px-3 py-1 rounded border transition-all ${
+                  isCopied ? "bg-green-500 border-green-500 text-black" : "border-gray-700 text-gray-400 hover:text-white hover:border-white"
+                }`}
               >
-                {isCopied ? (
-                  <>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Copié !
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                      ></path>
-                    </svg>
-                    Copier
-                  </>
-                )}
+                {isCopied ? "Copié !" : "Copier le texte"}
               </button>
             </div>
 
-            {/* Contenu du script */}
-            <div className="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
-              <div className="prose prose-invert prose-sm max-w-none text-slate-300 leading-relaxed whitespace-pre-wrap font-medium">{script}</div>
+            {/* Zone de texte style "Terminal" ou "Notes" */}
+            <div className="bg-[#121212] border-l-4 border-[#00f2ea] p-6 rounded-r-xl shadow-lg">
+              <div className="prose prose-invert max-w-none whitespace-pre-wrap text-gray-300 font-light leading-relaxed custom-scrollbar max-h-[60vh] overflow-y-auto">
+                {script}
+              </div>
             </div>
-          </div>
 
-          <p className="text-center text-slate-500 text-xs mt-4 pb-8">Généré par IA • Vérifie toujours le contenu</p>
-        </div>
-      )}
+            <p className="text-center text-[#333] text-[10px] mt-4 uppercase tracking-widest">Powered by Gemini AI</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
